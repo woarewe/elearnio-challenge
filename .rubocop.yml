@@ -26,6 +26,12 @@ Style/WordArray:
 Style/Documentation:
   Enabled: false
 
+RSpec/ExpectChange:
+  Enabled: false
+
+RSpec/MissingExampleGroupArgument:
+  Enabled: false
+
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb
