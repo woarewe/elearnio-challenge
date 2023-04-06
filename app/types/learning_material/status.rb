@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class Course
+  module LearningMaterial
     module Status
       DRAFT = "draft"
       PUBLISHED = "published"

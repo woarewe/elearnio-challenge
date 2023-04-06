@@ -16,6 +16,7 @@ module REST
 
     namespace(:talents) { mount Talents }
     namespace(:courses) { mount Courses }
+    namespace(:learning_paths) { mount LearningPaths }
 
     add_swagger_documentation mount_path: "/swagger"
   end

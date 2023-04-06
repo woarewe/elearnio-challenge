@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_06_013202) do
+ActiveRecord::Schema.define(version: 2023_04_06_051555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -29,6 +29,28 @@ ActiveRecord::Schema.define(version: 2023_04_06_013202) do
     t.index ["public_id"], name: "index_courses_on_public_id", unique: true
   end
 
+  create_table "learning_path_slots", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "learning_path_id", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_learning_path_slots_on_course_id"
+    t.index ["learning_path_id", "course_id"], name: "index_learning_path_slots_on_learning_path_id_and_course_id", unique: true
+  end
+
+  create_table "learning_paths", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "name", null: false
+    t.bigint "author_id", null: false
+    t.string "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_learning_paths_on_author_id"
+    t.index ["name"], name: "index_learning_paths_on_name", unique: true
+    t.index ["public_id"], name: "index_learning_paths_on_public_id", unique: true
+  end
+
   create_table "talents", force: :cascade do |t|
     t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
     t.string "email", null: false
@@ -41,4 +63,7 @@ ActiveRecord::Schema.define(version: 2023_04_06_013202) do
   end
 
   add_foreign_key "courses", "talents", column: "author_id"
+  add_foreign_key "learning_path_slots", "courses"
+  add_foreign_key "learning_path_slots", "learning_paths"
+  add_foreign_key "learning_paths", "talents", column: "author_id"
 end

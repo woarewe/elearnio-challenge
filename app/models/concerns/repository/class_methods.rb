@@ -19,27 +19,29 @@ module Repository
     def unsafe_save!(entity_or_properties)
       case entity_or_properties
       when entity_class
-        save_entity!(entity_or_properties)
+        save_entity!(entity_or_properties).entity
       when entity_class::Properties
-        save_properties!(entity_or_properties)
+        save_properties!(entity_or_properties).entity
       else
         raise TypeError, "unknown type to persist"
       end
     end
 
     def save_entity!(entity)
-      record = connected_record(entity)
-      record.update!(serialize_entity_properties(entity.properties))
-      record.entity
+      connected_record(entity)
+        .tap { |record| record.update!(serialize_entity_properties(entity.properties)) }
     end
 
     def save_properties!(properties)
-      record = create!(serialize_entity_properties(properties))
-      record.entity
+      create!(serialize_entity_properties(properties))
     end
 
     def connected_record(entity)
       find(entity.private_id)
+    end
+
+    def connected_records(entities)
+      where(id: entities.map(&:private_id))
     end
 
     def serialize_timestamps(timestamps)

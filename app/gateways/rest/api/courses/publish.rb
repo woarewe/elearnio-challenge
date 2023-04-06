@@ -12,7 +12,7 @@ module REST
             .then { |entity| ::Course.save!(entity) }
             .then { |entity| present entity, with: Serialization::Course }
         rescue ::Types::Course::AlreadyPublishedError
-          validation_error!(:name, I18n.t("rest.courses.errors.already_published"))
+          validation_error!(:name, I18n.t("rest.learning_materials.errors.already_published", material: "course"))
         end
       end
     end

@@ -15,7 +15,7 @@ module REST
         desc "Create a course"
         post do
           validate!(params, with: Contract) => { content:, author_id:, name: }
-          status = ::Types::Course::Status::DRAFT
+          status = ::Types::LearningMaterial::Status::DRAFT
           ::Talent
             .find_by_public_id(author_id)
             .tap { |author| not_found!(:author_id) if author.nil? }
@@ -23,7 +23,7 @@ module REST
             .then { |properties| ::Course.save!(properties) }
             .then { |entity| present entity, with: Serialization::Course }
         rescue ::Course::NameDuplicationError
-          validation_error!(:email, I18n.t("rest.errors.already_taken"))
+          validation_error!(:name, I18n.t("rest.errors.already_taken"))
         end
       end
     end

@@ -5,7 +5,7 @@ module Types
     class Properties < Struct
       attribute :name, Name
       attribute :author, Talent
-      attribute :status, Status.enum
+      attribute :status, LearningMaterial::Status.enum
       attribute :content, String
     end
   end

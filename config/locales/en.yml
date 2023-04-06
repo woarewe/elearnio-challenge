@@ -1,11 +1,20 @@
 en:
+  services:
+    errors:
+      not_found: not found
   rest:
     errors:
       not_found: not found
       already_taken: already taken
     courses:
       errors:
+    learning_materials:
+      errors:
         already_published: already published
+        deleting_published: "a published %{material} can not be deleted"
     talents:
       errors:
         same_author: can not be the same talent
+    learning_paths:
+      errors:
+        not_published_courses: "not published courses can not be added: %{course_ids}"
