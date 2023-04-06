@@ -12,11 +12,18 @@ module Repository
     end
 
     def entity_properties
-      self.class.property_class.new(entity_properties_hash)
+      self.class.property_class.new(
+        **default_entity_properties_hash.with_indifferent_access,
+        **custom_entity_properties_hash.with_indifferent_access
+      )
     end
 
-    def entity_properties_hash
+    def default_entity_properties_hash
       as_json.with_indifferent_access.slice(*self.class.property_class.attribute_names)
+    end
+
+    def custom_entity_properties_hash
+      {}
     end
 
     def entity_timestamps

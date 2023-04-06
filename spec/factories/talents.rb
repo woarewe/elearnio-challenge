@@ -7,6 +7,8 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     created_at { 2.days.ago }
     updated_at { 1.day.ago }
+    id { Faker::Number.unique.positive }
+    public_id { SecureRandom.uuid }
 
     trait :unique do
       first_name { Faker::Name.unique.first_name }

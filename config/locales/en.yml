@@ -3,3 +3,6 @@ en:
     errors:
       not_found: not found
       already_taken: already taken
+    courses:
+      errors:
+        already_published: already published

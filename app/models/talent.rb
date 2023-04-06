@@ -15,4 +15,6 @@ class Talent < ApplicationRecord
       raise EmailDuplicationError
     end
   end
+
+  has_many :created_courses, class_name: "Course", dependent: nil, inverse_of: :author
 end

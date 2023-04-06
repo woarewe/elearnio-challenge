@@ -47,7 +47,13 @@ module Repository
     end
 
     def serialize_entity_properties(properties)
-      properties.as_json
+      properties.as_json.with_indifferent_access.merge(
+        serialize_entity_properties_relations(properties)
+      )
+    end
+
+    def serialize_entity_properties_relations(_properties)
+      {}
     end
 
     def serialize_entity(entity)

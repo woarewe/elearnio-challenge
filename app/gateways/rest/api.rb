@@ -14,6 +14,7 @@ module REST
     PER_PAGE_DEFAULT = 50
 
     namespace(:talents) { mount Talents }
+    namespace(:courses) { mount Courses }
 
     add_swagger_documentation mount_path: "/swagger"
   end
