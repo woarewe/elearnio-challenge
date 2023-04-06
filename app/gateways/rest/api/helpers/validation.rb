@@ -16,6 +16,7 @@ module REST
           errors = { field => Array(message) }
           error!(errors, 422)
         end
+        alias invalid! validation_error!
 
         def not_found!(key)
           errors = { key => Array(I18n.t!("rest.errors.not_found")) }

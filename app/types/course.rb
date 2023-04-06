@@ -6,6 +6,7 @@ module Types
 
     Error = Class.new(StandardError)
     AlreadyPublishedError = Class.new(Error)
+    SameAuthorError = Class.new(Error)
 
     def published?
       properties.status == Status::PUBLISHED
@@ -17,6 +18,12 @@ module Types
 
     def publish!
       published_guard! { update_status(Status::PUBLISHED) }
+    end
+
+    def change_author!(author)
+      raise SameAuthorError if author == properties.author
+
+      update_author(author)
     end
 
     def update_content!(content)
@@ -49,6 +56,11 @@ module Types
 
     def update_name(name)
       updated_properties = Properties.new(properties.to_h.merge(name:))
+      update_properties(updated_properties)
+    end
+
+    def update_author(author)
+      updated_properties = Properties.new(properties.to_h.merge(author:))
       update_properties(updated_properties)
     end
   end

@@ -6,3 +6,6 @@ en:
     courses:
       errors:
         already_published: already published
+    talents:
+      errors:
+        same_author: can not be the same talent

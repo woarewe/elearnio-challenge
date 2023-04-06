@@ -7,7 +7,8 @@ module REST
 
     helpers(
       Helpers::Validation,
-      Helpers::Pagination
+      Helpers::Pagination,
+      Helpers::DB
     )
 
     PER_PAGE_LIMIT = 100
