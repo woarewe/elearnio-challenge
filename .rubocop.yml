@@ -32,6 +32,9 @@ RSpec/ExpectChange:
 RSpec/MissingExampleGroupArgument:
   Enabled: false
 
+Rails/DynamicFindBy:
+  Enabled: false
+
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb

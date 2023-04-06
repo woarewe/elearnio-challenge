@@ -10,5 +10,7 @@ module Repository
 
     include InstanceMethods
     include PublicID
+
+    scope :sequentially, -> { order(created_at: :asc) }
   end
 end

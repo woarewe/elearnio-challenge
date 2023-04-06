@@ -12,6 +12,10 @@ module Repository
       handle_database_errors { unsafe_save!(entity_or_properties) }
     end
 
+    def find_by_public_id(public_id)
+      find_by(public_id:)&.entity
+    end
+
     def unsafe_save!(entity_or_properties)
       case entity_or_properties
       when entity_class

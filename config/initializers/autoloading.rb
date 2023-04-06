@@ -8,6 +8,9 @@ Rails.autoloaders.each do |autoloader|
   autoloader.inflector.inflect(
     "db" => "DB",
     "public_id" => "PublicID",
-    "id" => "ID"
+    "id" => "ID",
+    "with_public_id" => "WithPublicID",
+    "rest" => "REST",
+    "api" => "API"
   )
 end
