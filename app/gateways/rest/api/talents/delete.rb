@@ -16,8 +16,14 @@ module REST
             ::Talent.find_by_public_id(id).tap { |talent| not_found!(:new_author_id) if talent.nil? }
           end
 
-          def transfer_courses!(courses, new_author)
+          def transfer_learning_materials!(talent) # rubocop:disable Metrics/AbcSize,  Metrics/CyclomaticComplexity
+            courses = ::Course.filter_by_author(talent).map(&:entity)
+            learning_paths = ::LearningPath.filter_by_author(talent).map(&:entity)
+            return if courses.empty? && learning_paths.empty?
+
+            new_author = find_new_author!
             courses.each { |course| ::Course.save!(course.change_author!(new_author)) }
+            learning_paths.each { |learning_path| ::LearningPath.save!(learning_path.change_author!(new_author)) }
           rescue ::Types::Course::SameAuthorError
             invalid!(:new_author_id, I18n.t!("rest.talents.errors.same_author"))
           end
@@ -27,9 +33,8 @@ module REST
         delete do
           status 204
           talent = find_requested_talent!
-          courses = ::Course.filter_by_author(talent).map(&:entity)
           transaction do
-            transfer_courses!(courses, find_new_author!) if courses.any?
+            transfer_learning_materials!(talent)
             ::Talent.delete(talent.private_id)
           end
         end
