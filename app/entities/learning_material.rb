@@ -20,6 +20,14 @@ module Types
       properties.status == LearningMaterial::Status::DRAFT
     end
 
+    def author?(talent)
+      properties.author == talent
+    end
+
+    def co_author?(talent)
+      co_authors.include?(talent)
+    end
+
     def publish!
       published_guard! { update_status(LearningMaterial::Status::PUBLISHED) }
     end
@@ -32,6 +40,10 @@ module Types
 
     def update_name!(name)
       published_guard! { update_name(name) }
+    end
+
+    def co_authors
+      raise NotImplementedError
     end
 
     private

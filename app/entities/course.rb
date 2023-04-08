@@ -11,6 +11,10 @@ module Types
       published_guard! { update_content(content) }
     end
 
+    def co_authors
+      []
+    end
+
     private
 
     def update_content(content)

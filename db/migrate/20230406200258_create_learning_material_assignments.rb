@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLearningMaterialAssignments < ActiveRecord::Migration[6.1]
   def change
     create_table :learning_material_assignments do |t|
@@ -12,6 +14,7 @@ class CreateLearningMaterialAssignments < ActiveRecord::Migration[6.1]
 
     add_foreign_key :learning_material_assignments, :talents
 
-    add_index :learning_material_assignments, [:talent_id, :learning_material_id, :learning_material_type], unique: true, name: 'learning_material_assigments_uniq'
+    add_index :learning_material_assignments, [:talent_id, :learning_material_id, :learning_material_type],
+              unique: true, name: "learning_material_assigments_uniq"
   end
 end

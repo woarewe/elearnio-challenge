@@ -20,6 +20,10 @@ module Types
       published_guard! { update_courses(courses) }
     end
 
+    def co_authors
+      properties.courses.map { |course| course.properties.author }
+    end
+
     private
 
     def update_courses(courses)

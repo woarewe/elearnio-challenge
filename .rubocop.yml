@@ -11,6 +11,10 @@ AllCops:
     - db/schema.rb
     - vendor/**/*
 
+RSpec/FilePath:
+  Exclude:
+    - spec/entities/**/*_spec.rb
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 

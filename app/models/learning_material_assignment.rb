@@ -1,2 +1,0 @@
-class LearningMaterialAssignment < ApplicationRecord
-end
