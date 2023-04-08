@@ -11,3 +11,4 @@ module Tests
 end
 
 require_relative "helpers/services"
+require_relative "helpers/repositories"

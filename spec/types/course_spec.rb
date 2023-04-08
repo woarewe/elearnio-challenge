@@ -7,13 +7,13 @@ describe Types::Course do
     subject(:result) { instance.published? }
 
     context "when a course is still in draft" do
-      let(:instance) { build(:course, :draft).entity }
+      let(:instance) { build(:course, :draft) }
 
       it { is_expected.to be(false) }
     end
 
     context "when a course is published" do
-      let(:instance) { build(:course, :published).entity }
+      let(:instance) { build(:course, :published) }
 
       it { is_expected.to be(true) }
     end
@@ -23,13 +23,13 @@ describe Types::Course do
     subject(:result) { instance.draft? }
 
     context "when a course is still in draft" do
-      let(:instance) { build(:course, :draft).entity }
+      let(:instance) { build(:course, :draft) }
 
       it { is_expected.to be(true) }
     end
 
     context "when a course is published" do
-      let(:instance) { build(:course, :published).entity }
+      let(:instance) { build(:course, :published) }
 
       it { is_expected.to be(false) }
     end

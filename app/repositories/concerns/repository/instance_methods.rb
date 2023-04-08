@@ -11,18 +11,20 @@ module Repository
       )
     end
 
+    private
+
     def entity_properties
-      self.class.property_class.new(
-        **default_entity_properties_hash.with_indifferent_access,
-        **custom_entity_properties_hash.with_indifferent_access
+      self.class.entity_properties_class.new(
+        **entity_attributes.with_indifferent_access,
+        **adjusted_entity_attributes.with_indifferent_access
       )
     end
 
-    def default_entity_properties_hash
-      as_json.with_indifferent_access.slice(*self.class.property_class.attribute_names)
+    def entity_attributes
+      as_json.with_indifferent_access.slice(*self.class.entity_properties_class.attribute_names)
     end
 
-    def custom_entity_properties_hash
+    def adjusted_entity_attributes
       {}
     end
 

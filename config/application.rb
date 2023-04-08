@@ -25,6 +25,9 @@ module Types
   include Dry.Types()
 end
 
+module Repositories
+end
+
 module ELearnioChallenge
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

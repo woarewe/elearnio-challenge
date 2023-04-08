@@ -16,6 +16,18 @@ ActiveRecord::Schema.define(version: 2023_04_06_200258) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "course_assignments", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.bigint "talent_id", null: false
+    t.string "status", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_course_assignments_on_course_id"
+    t.index ["public_id"], name: "index_course_assignments_on_public_id", unique: true
+    t.index ["talent_id", "course_id"], name: "index_course_assignments_on_talent_id_and_course_id", unique: true
+  end
+
   create_table "courses", force: :cascade do |t|
     t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
     t.string "name", null: false
@@ -27,17 +39,6 @@ ActiveRecord::Schema.define(version: 2023_04_06_200258) do
     t.index ["author_id"], name: "index_courses_on_author_id"
     t.index ["name"], name: "index_courses_on_name", unique: true
     t.index ["public_id"], name: "index_courses_on_public_id", unique: true
-  end
-
-  create_table "learning_material_assignments", force: :cascade do |t|
-    t.bigint "talent_id", null: false
-    t.string "learning_material_type", null: false
-    t.bigint "learning_material_id", null: false
-    t.string "status", null: false
-    t.jsonb "info", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["talent_id", "learning_material_id", "learning_material_type"], name: "learning_material_assigments_uniq", unique: true
   end
 
   create_table "learning_path_slots", force: :cascade do |t|
@@ -73,8 +74,9 @@ ActiveRecord::Schema.define(version: 2023_04_06_200258) do
     t.index ["public_id"], name: "index_talents_on_public_id", unique: true
   end
 
+  add_foreign_key "course_assignments", "courses"
+  add_foreign_key "course_assignments", "talents"
   add_foreign_key "courses", "talents", column: "author_id"
-  add_foreign_key "learning_material_assignments", "talents"
   add_foreign_key "learning_path_slots", "courses"
   add_foreign_key "learning_path_slots", "learning_paths"
   add_foreign_key "learning_paths", "talents", column: "author_id"
