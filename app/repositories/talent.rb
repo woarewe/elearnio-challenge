@@ -8,7 +8,8 @@ module Repositories
     EmailDuplicationError = Class.new(Error)
 
     has_many :created_courses, class_name: "Course", inverse_of: :author
-    has_many :course_assignments, class_name: "Course::Assignment", inverse_of: :course
+    has_many :course_assignments, class_name: "Course::Assignment"
+    has_many :learning_path_assignments, class_name: "LearningPath::Assignment"
 
     class << self
       def handle_database_errors

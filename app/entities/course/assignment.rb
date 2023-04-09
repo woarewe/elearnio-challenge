@@ -12,6 +12,10 @@ module Types
         completed_guard! { update_properties(status: LearningMaterial::AssignmentStatus::COMPLETED) }
       end
 
+      def in_progress?
+        status == LearningMaterial::AssignmentStatus::IN_PROGRESS
+      end
+
       private
 
       def completed_guard!

@@ -18,6 +18,7 @@ module Types
 
     def next_course(assignments)
       progress = progress_table(assignments)
+      return if assignments.any?(&:in_progress?)
 
       courses.find do |course|
         progress[course.private_id].nil?

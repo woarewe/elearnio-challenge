@@ -92,9 +92,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_a_middle_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_a_courses[1],
             talent:
           )
@@ -104,9 +104,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_b_middle_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_b_courses[1],
             talent:
           )
@@ -116,9 +116,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_c_middle_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_c_courses[1],
             talent:
           )
@@ -151,9 +151,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_a_previous_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_a_courses[0],
             talent:
           )
@@ -163,9 +163,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_b_previous_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_b_courses[0],
             talent:
           )
@@ -175,9 +175,9 @@ describe Services::Course::Assignment::Complete, type: :service do
       let(:learning_path_c_previous_course_assignment) do
         build(
           :course_assignment,
-          :completed,
           properties: build(
             :course_assignment_properties,
+            :completed,
             course: learning_path_c_courses[0],
             talent:
           )
