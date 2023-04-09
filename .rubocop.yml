@@ -48,3 +48,4 @@ Rails/ApplicationRecord:
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb
+    - spec/helpers/repositories/**/*.rb
