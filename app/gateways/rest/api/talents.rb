@@ -14,6 +14,8 @@ module REST
         mount Show
         mount Update
         mount Delete
+        mount AssignedLearningPaths
+        mount AssignedCourses
       end
     end
   end
