@@ -18,6 +18,8 @@ en:
         already_completed: "already completed"
     talents:
       errors:
+        no_new_author: deleting the talent requires a new author provided
+        new_author_assigned: new author is already assigned to the talents' materials
         same_author: can not be the same talent
     learning_paths:
       errors:

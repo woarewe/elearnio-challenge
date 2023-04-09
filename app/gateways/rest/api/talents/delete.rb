@@ -4,39 +4,17 @@ module REST
   class API
     class Talents
       class Delete < Base
-        class Contract < Dry::Validation::Contract
-          json do
-            optional(:new_author_id).filled(::Types::ID::Public)
-          end
-        end
-
-        helpers do
-          def find_new_author!
-            validate!(params, with: Contract) => { new_author_id: id }
-            ::Talent.find_by_public_id(id).tap { |talent| not_found!(:new_author_id) if talent.nil? }
-          end
-
-          def transfer_learning_materials!(talent) # rubocop:disable Metrics/AbcSize,  Metrics/CyclomaticComplexity
-            courses = ::Course.filter_by_author(talent).map(&:entity)
-            learning_paths = ::LearningPath.filter_by_author(talent).map(&:entity)
-            return if courses.empty? && learning_paths.empty?
-
-            new_author = find_new_author!
-            courses.each { |course| ::Course.save!(course.change_author!(new_author)) }
-            learning_paths.each { |learning_path| ::LearningPath.save!(learning_path.change_author!(new_author)) }
-          rescue ::Types::Course::SameAuthorError
-            invalid!(:new_author_id, I18n.t!("rest.talents.errors.same_author"))
-          end
-        end
-
         desc "Delete a talent"
         delete do
           status 204
-          talent = find_requested_talent!
-          transaction do
-            transfer_learning_materials!(talent)
-            ::Talent.delete(talent.private_id)
-          end
+          talent = find_requested_resource!
+          Services::Talent::Delete.new.call(talent:, params:)
+        rescue Services::Talent::Delete::NoNewAuthorProvidedError
+          validation_error!(:new_author_id, I18n.t("rest.talents.errors.no_new_author"))
+        rescue ::Services::NotFoundError => error
+          validation_error!(error.key, error.message)
+        rescue ::Services::Talent::Delete::NewAuthorAssignedToMaterialError
+          validation_error!(:new_author_id, I18n.t("rest.talents.errors.new_author_assigned"))
         end
       end
     end

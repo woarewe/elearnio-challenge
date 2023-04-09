@@ -12,6 +12,10 @@ module Repositories
     has_many :learning_path_assignments, class_name: "LearningPath::Assignment"
 
     class << self
+      def author?(talent)
+        Course.filter_by_author(talent).any? || LearningPath.filter_by_author(talent).any?
+      end
+
       def handle_database_errors
         yield
       rescue ActiveRecord::RecordNotUnique

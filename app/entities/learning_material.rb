@@ -6,7 +6,6 @@ module Types
 
     Error = Class.new(StandardError)
     AlreadyPublishedError = Class.new(Error)
-    SameAuthorError = Class.new(Error)
 
     def published?
       properties.status == LearningMaterial::Status::PUBLISHED
@@ -22,12 +21,6 @@ module Types
 
     def publish!
       published_guard! { update_properties(status: LearningMaterial::Status::PUBLISHED) }
-    end
-
-    def change_author!(talent)
-      raise SameAuthorError if author?(talent)
-
-      update_properties(author:)
     end
 
     def update_author(author)
