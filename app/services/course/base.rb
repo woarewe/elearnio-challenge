@@ -2,7 +2,7 @@
 
 module Services
   module Course
-    class Base
+    class Base < Services::Base
       private
 
       def find_author!(params)

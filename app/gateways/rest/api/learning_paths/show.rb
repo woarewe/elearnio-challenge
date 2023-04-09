@@ -6,7 +6,7 @@ module REST
       class Show < Base
         desc "Show a learning_path"
         get do
-          find_requested_learning_path!
+          find_requested_resource!([:author, { courses: :author }])
             .then { |entity| present entity, with: Serialization::LearningPath }
         end
       end

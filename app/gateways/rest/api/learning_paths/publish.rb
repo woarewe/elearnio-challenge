@@ -6,14 +6,13 @@ module REST
       class Publish < Base
         desc "Publish a learning path"
         patch :publish do
-          learning_path = find_requested_learning_path!
-          learning_path
-            .publish!
-            .then { |entity| ::LearningPath.save!(entity) }
-            .then { |entity| present entity, with: Serialization::LearningPath }
-        rescue ::Types::LearningPath::AlreadyPublishedError
-          validation_error!(:name,
-                            I18n.t("rest.learning_materials.errors.already_published", material: "learning path"))
+          handle_execution_errors do
+            learning_path = find_requested_resource!
+            learning_path
+              .publish!
+              .then { |entity| ::Repositories::LearningPath.save!(entity).entity }
+              .then { |entity| present entity, with: Serialization::LearningPath }
+          end
         end
       end
     end

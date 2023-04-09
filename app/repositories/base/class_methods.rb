@@ -53,13 +53,19 @@ module Repositories
       end
 
       def save_entity!(entity)
-        save_entity_record!(entity).tap do
-          save_related_records!(entity)
+        transaction do
+          save_entity_record!(entity).tap do |record|
+            save_related_records!(entity, record)
+          end
         end
       end
 
       def save_properties!(properties)
-        create!(serialize_properties(properties))
+        transaction do
+          create!(serialize_properties(properties)).tap do |record|
+            save_related_records!(properties, record)
+          end
+        end
       end
 
       def save_entity_record!(entity)
@@ -68,7 +74,7 @@ module Repositories
         record
       end
 
-      def save_related_records!(_entity); end
+      def save_related_records!(_entity, _record); end
 
       def serialize_entity_identifiers(entity)
         { id: entity.private_id, public_id: entity.public_id }

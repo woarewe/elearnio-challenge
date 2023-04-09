@@ -5,12 +5,7 @@ module REST
     class LearningPaths < Grape::API
       format "json"
 
-      helpers do
-        def find_requested_learning_path!
-          params => { id: public_id }
-          ::LearningPath.find_by_public_id(public_id).tap { |learning_path| not_found!(:id) if learning_path.nil? }
-        end
-      end
+      helpers(Helpers::LearningPaths, Helpers::LearningMaterials)
 
       mount Create
       mount Index
