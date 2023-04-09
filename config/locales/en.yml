@@ -12,6 +12,10 @@ en:
       errors:
         already_published: already published
         deleting_published: "a published %{material} can not be deleted"
+        assigning_not_published: "not allowed to assign not a published %{material}"
+        assigning_to_author: "not allowed to assign to an author or a co-author"
+        already_assigned: "already assigned"
+        already_completed: "already completed"
     talents:
       errors:
         same_author: can not be the same talent

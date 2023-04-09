@@ -16,6 +16,8 @@ module REST
         mount Delete
         mount Publish
       end
+
+      namespace(:assignments) { mount Assignments }
     end
   end
 end

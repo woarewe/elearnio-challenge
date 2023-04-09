@@ -11,8 +11,8 @@ module Types
         private
 
         def additional_checks!(*)
-          raise AssigningToAuthorError if course.author?(talent)
           raise AssigningNotPublishedCourseError unless course.published?
+          raise AssigningToAuthorError if course.author?(talent)
         end
       end
     end

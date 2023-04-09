@@ -11,6 +11,8 @@ module Repositories
 
     belongs_to :author, class_name: "Talent"
 
+    has_many :assignments, class_name: "Assignment"
+
     class << self
       def serialize_property_attributes_with_different_names(properties)
         { author: Talent.connected_record(properties.author) }
