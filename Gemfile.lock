@@ -299,6 +299,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.4)
   dotenv-rails (~> 2.8, >= 2.8.1)
+  dry-initializer (~> 3.1.1)
   dry-struct (~> 1.6)
   dry-types (~> 1.7.1)
   dry-validation (~> 1.10)

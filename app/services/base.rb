@@ -2,6 +2,14 @@
 
 module Services
   class Base
+    extend Dry::Initializer
+
+    class << self
+      def dependency(name, type = nil, **opts, &)
+        option(name, type, **opts.merge(reader: :private), &)
+      end
+    end
+
     private
 
     def find_talent!(params, as:)

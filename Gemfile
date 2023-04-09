@@ -7,6 +7,7 @@ ruby "3.1.3"
 
 gem "bootsnap", ">= 1.4.4", require: false
 gem "dotenv-rails", "~> 2.8", ">= 2.8.1", require: "dotenv/rails-now"
+gem "dry-initializer", "~> 3.1.1"
 gem "dry-struct", "~> 1.6"
 gem "dry-types", "~> 1.7.1"
 gem "dry-validation", "~> 1.10"
