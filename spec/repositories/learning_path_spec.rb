@@ -39,7 +39,7 @@ describe Repositories::LearningPath, type: :repository do
       let(:input) { properties }
     end
 
-    shared_context "when saving persisted entity" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    shared_context "when saving persisted entity" do
       let(:persisted_entity) { build(:learning_path) }
       let(:updated_entity) do
         build(

@@ -45,6 +45,9 @@ Rails/ActiveRecordAliases:
 Rails/ApplicationRecord:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb
