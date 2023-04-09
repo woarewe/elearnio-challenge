@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BaseService
+module Services
   Error = Class.new(StandardError)
 
   class NotFoundError < Error

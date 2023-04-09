@@ -19,8 +19,15 @@ module Types
       public_id.eql?(other.public_id) && super
     end
 
-    def update_properties(properties)
+    private
+
+    def replace_properties(properties)
       new(to_h.merge(properties:))
+    end
+
+    def update_properties(**new)
+      updated = properties.to_h.merge(new)
+      replace_properties(updated)
     end
   end
 end

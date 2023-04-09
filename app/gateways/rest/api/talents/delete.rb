@@ -6,7 +6,7 @@ module REST
       class Delete < Base
         class Contract < Dry::Validation::Contract
           json do
-            required(:new_author_id).filled(::Types::ID::Public)
+            optional(:new_author_id).filled(::Types::ID::Public)
           end
         end
 

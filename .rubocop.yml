@@ -39,6 +39,12 @@ RSpec/MissingExampleGroupArgument:
 Rails/DynamicFindBy:
   Enabled: false
 
+Rails/ActiveRecordAliases:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb

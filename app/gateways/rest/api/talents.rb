@@ -5,12 +5,7 @@ module REST
     class Talents < Grape::API
       format "json"
 
-      helpers do
-        def find_requested_talent!
-          params => { id: public_id }
-          ::Talent.find_by_public_id(public_id).tap { |talent| not_found!(:id) if talent.nil? }
-        end
-      end
+      helpers(Helpers::Talents)
 
       mount Create
       mount Index

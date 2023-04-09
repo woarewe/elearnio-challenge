@@ -5,7 +5,7 @@ module Tests
     module Repositories
       module Talent
         def persist_entity!(entity)
-          ::Talent.create!(
+          ::Repositories::Talent.create!(
             id: entity.private_id,
             public_id: entity.public_id,
             first_name: entity.first_name,

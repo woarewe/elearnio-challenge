@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Talent, type: :repository do
+describe Repositories::Talent, type: :repository do
   include Tests::Helpers::Repositories::Talent
 
   describe "#save!" do
@@ -68,7 +68,7 @@ describe Talent, type: :repository do
     end
 
     shared_examples "persisting required attributes" do
-      let(:record) { result.fetch(:record) }
+      let(:record) { result.record }
 
       before do
         result

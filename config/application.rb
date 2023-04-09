@@ -25,8 +25,8 @@ module Types
   include Dry.Types()
 end
 
-module Repositories
-end
+module Services; end
+module Repositories; end
 
 module ELearnioChallenge
   class Application < Rails::Application
