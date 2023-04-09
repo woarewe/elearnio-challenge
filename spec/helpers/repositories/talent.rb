@@ -7,7 +7,7 @@ module Tests
         module_function
 
         def persist_talent!(entity)
-          ::Repositories::Talent.create!(
+          ::Repositories::Talent.find_or_create_by!(
             id: entity.private_id,
             public_id: entity.public_id,
             first_name: entity.first_name,

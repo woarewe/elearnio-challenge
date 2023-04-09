@@ -19,6 +19,10 @@ module Types
       public_id.eql?(other.public_id) && super
     end
 
+    def hash
+      public_id
+    end
+
     private
 
     def replace_properties(properties)

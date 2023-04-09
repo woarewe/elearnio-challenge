@@ -48,6 +48,13 @@ Rails/ApplicationRecord:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/ExampleLength:
+  Max: 10
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/helpers/repositories/**/*.rb
+
 Metrics/MethodLength:
   Exclude:
     - db/migrate/**/*.rb

@@ -7,7 +7,7 @@ module Tests
         module_function
 
         def persist_course!(entity)
-          ::Repositories::Course.create!(
+          ::Repositories::Course.find_or_create_by!(
             id: entity.private_id,
             public_id: entity.public_id,
             name: entity.name,

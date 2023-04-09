@@ -6,24 +6,16 @@ module Repositories
 
     entity Types::Course
 
+    extend ClassMethods
+
     Error = Class.new(Error)
     NameDuplicationError = Class.new(Error)
 
     belongs_to :author, class_name: "Talent"
 
     has_many :assignments, class_name: "Assignment"
-
-    class << self
-      def serialize_property_attributes_with_different_names(properties)
-        { author: Talent.connected_record(properties.author) }
-      end
-
-      def handle_database_errors
-        yield
-      rescue ActiveRecord::RecordNotUnique
-        raise NameDuplicationError
-      end
-    end
+    has_many :learning_path_slots, class_name: "LearningPath::Slot"
+    has_many :learning_paths, through: :learning_path_slots
 
     def override_entity_attributes
       { author: author.entity }
