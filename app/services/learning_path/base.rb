@@ -5,13 +5,6 @@ module Services
     class Base < Services::Base
       private
 
-      def find_author!(params)
-        params => { author_id: public_id }
-        ::Repositories::Talent
-          .seek(public_id)
-          .tap { |talent| raise NotFoundError, :author_id if talent.nil? }
-      end
-
       def find_courses!(params)
         params => { course_ids: public_ids }
         courses = ::Repositories::Course.with_author.where(public_id: public_ids).map(&:entity)

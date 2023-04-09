@@ -22,7 +22,7 @@ describe Types::Course::Assignment::Properties do
       include_context "when a course is not published"
       include_context "when assigning to another talent"
 
-      it { expect { instance }.to raise_error(Types::Course::Assignment::AssigningNotPublishedCourseError) }
+      it { expect { instance }.to raise_error(Types::LearningMaterial::Assignment::AssigningNotPublishedError) }
     end
 
     context do

@@ -5,7 +5,7 @@ module Services
     module Assignment
       class Create < Services::Base
         def call(params)
-          talent = find_talent!(params)
+          talent = find_talent!(params, as: :talent_id)
           find_course!(params)
             .then { |course| build_properties(talent, course) }
             .then { |properties| Repositories::Course::Assignment.save!(properties) }
@@ -13,13 +13,6 @@ module Services
         end
 
         private
-
-        def find_talent!(params)
-          params => { talent_id: }
-          ::Repositories::Talent.seek(talent_id).tap do |talent|
-            raise NotFoundError, :talent_id if talent.nil?
-          end
-        end
 
         def find_course!(params)
           params => { course_id: }

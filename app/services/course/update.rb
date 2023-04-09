@@ -4,7 +4,7 @@ module Services
   module Course
     class Update < Base
       def call(course:, params:)
-        find_author!(params)
+        find_talent!(params, as: :author_id)
           .then { |author| update_attributes(course, params, author) }
           .then { |entity| ::Repositories::Course.save!(entity) }
           .then(&:entity)

@@ -2,18 +2,14 @@
 
 module REST
   class API
-    class Courses
+    class LearningPaths
       class Assignments < Base
         helpers(
-          Helpers::Courses::Assignments,
+          Helpers::LearningPaths::Assignments,
           Helpers::LearningMaterials::Assignments
         )
 
         mount Create
-
-        route_param :id do
-          mount Complete
-        end
       end
     end
   end

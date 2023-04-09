@@ -4,7 +4,7 @@ module Services
   module LearningPath
     class Create < Base
       def call(params)
-        author = find_author!(params)
+        author = find_talent!(params, as: :author_id)
         courses = find_courses!(params)
         properties = build_properties(params, author, courses)
         Repositories::LearningPath.save!(properties).entity

@@ -5,7 +5,7 @@ module Services
     class Update < Base
       def call(learning_path:, params:)
         courses = find_courses!(params)
-        author = find_author!(params)
+        author = find_talent!(params, as: :author_id)
         params => { name: }
         learning_path
           .update_name!(name)

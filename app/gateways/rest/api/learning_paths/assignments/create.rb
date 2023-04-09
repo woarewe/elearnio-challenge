@@ -2,22 +2,22 @@
 
 module REST
   class API
-    class Courses
+    class LearningPaths
       class Assignments
         class Create < Base
           class Contract < Dry::Validation::Contract
             json do
               required(:talent_id).filled(Types::ID::Public)
-              required(:course_id).filled(Types::ID::Public)
+              required(:learning_path_id).filled(Types::ID::Public)
             end
           end
 
-          desc "Assign a course to a talent"
+          desc "Assign a learning path to a talent"
           post do
             handle_execution_errors do
               validate!(params, with: Contract)
-                .then { |validated| ::Services::Course::Assignment::Create.new.call(validated) }
-                .then { |entity| present entity, with: Serialization::Course::Assignment }
+                .then { |validated| ::Services::LearningPath::Assignment::Create.new.call(validated) }
+                .then { |entity| present entity, with: Serialization::LearningPath::Assignment }
             end
           end
         end

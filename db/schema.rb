@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_06_200258) do
+ActiveRecord::Schema.define(version: 2023_04_09_052841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 2023_04_06_200258) do
     t.index ["author_id"], name: "index_courses_on_author_id"
     t.index ["name"], name: "index_courses_on_name", unique: true
     t.index ["public_id"], name: "index_courses_on_public_id", unique: true
+  end
+
+  create_table "learning_path_assignments", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.bigint "learning_path_id", null: false
+    t.bigint "talent_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["learning_path_id", "talent_id"], name: "learning_path_assignments_uniq", unique: true
+    t.index ["public_id"], name: "index_learning_path_assignments_on_public_id", unique: true
+    t.index ["talent_id"], name: "index_learning_path_assignments_on_talent_id"
   end
 
   create_table "learning_path_slots", force: :cascade do |t|
@@ -77,6 +88,8 @@ ActiveRecord::Schema.define(version: 2023_04_06_200258) do
   add_foreign_key "course_assignments", "courses"
   add_foreign_key "course_assignments", "talents"
   add_foreign_key "courses", "talents", column: "author_id"
+  add_foreign_key "learning_path_assignments", "learning_paths"
+  add_foreign_key "learning_path_assignments", "talents"
   add_foreign_key "learning_path_slots", "courses"
   add_foreign_key "learning_path_slots", "learning_paths"
   add_foreign_key "learning_paths", "talents", column: "author_id"
