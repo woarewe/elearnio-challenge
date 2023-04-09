@@ -6,7 +6,7 @@ module REST
       class Show < Base
         desc "Show a course"
         get do
-          find_requested_course!
+          find_requested_resource!
             .then { |entity| present entity, with: Serialization::Course }
         end
       end

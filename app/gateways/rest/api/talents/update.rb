@@ -7,7 +7,7 @@ module REST
         desc "Update a talent"
         put do
           handle_execution_errors do
-            talent = find_requested_talent!
+            talent = find_requested_resource!
             validate!(params, with: Validation::Talent::Properties)
               .then { |validated| Services::Talent::Update.new.call(talent:, params: validated) }
               .then { |entity| present entity, with: Serialization::Talent }

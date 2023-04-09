@@ -6,13 +6,12 @@ module REST
       class Publish < Base
         desc "Publish a course"
         patch :publish do
-          course = find_requested_course!
-          course
-            .publish!
-            .then { |entity| ::Course.save!(entity) }
-            .then { |entity| present entity, with: Serialization::Course }
-        rescue ::Types::Course::AlreadyPublishedError
-          validation_error!(:name, I18n.t("rest.learning_materials.errors.already_published", material: "course"))
+          handle_execution_errors do
+            find_requested_resource!
+              .publish!
+              .then { |entity| ::Repositories::Course.save!(entity).entity }
+              .then { |entity| present entity, with: Serialization::Course }
+          end
         end
       end
     end

@@ -10,7 +10,7 @@ module REST
           validation_error!(:email, I18n.t("rest.errors.already_taken"))
         end
 
-        def find_requested_talent!(includes = {})
+        def find_requested_resource!(includes = {})
           params => { id: public_id }
           ::Repositories::Talent
             .includes(includes)

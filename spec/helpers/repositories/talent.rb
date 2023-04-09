@@ -4,7 +4,9 @@ module Tests
   module Helpers
     module Repositories
       module Talent
-        def persist_entity!(entity)
+        module_function
+
+        def persist_talent!(entity)
           ::Repositories::Talent.create!(
             id: entity.private_id,
             public_id: entity.public_id,

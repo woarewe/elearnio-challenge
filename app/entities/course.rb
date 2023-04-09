@@ -11,15 +11,10 @@ module Types
       published_guard! { update_content(content) }
     end
 
-    def co_authors
-      []
-    end
-
     private
 
     def update_content(content)
-      updated_properties = Properties.new(properties.to_h.merge(content:))
-      update_properties(updated_properties)
+      update_properties(content:)
     end
   end
 end

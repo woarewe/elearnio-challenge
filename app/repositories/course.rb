@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
-class Course < ApplicationRecord
-  include Repository
-  include LearningMaterial
+module Repositories
+  class Course < Base
+    include LearningMaterial
 
-  entity Types::Course
+    entity Types::Course
 
-  Error = Class.new(Error)
-  NameDuplicationError = Class.new(Error)
+    Error = Class.new(Error)
+    NameDuplicationError = Class.new(Error)
 
-  class << self
-    def serialize_entity_properties_relations(properties)
-      { author: Talent.connected_record(properties.author) }
+    belongs_to :author, class_name: "Talent"
+
+    class << self
+      def serialize_property_attributes_with_different_names(properties)
+        { author: Talent.connected_record(properties.author) }
+      end
+
+      def handle_database_errors
+        yield
+      rescue ActiveRecord::RecordNotUnique
+        raise NameDuplicationError
+      end
     end
 
-    def handle_database_errors
-      yield
-    rescue ActiveRecord::RecordNotUnique
-      raise NameDuplicationError
+    def override_entity_attributes
+      { author: author.entity }
     end
-  end
-
-  belongs_to :author, class_name: "Talent", inverse_of: :created_courses
-
-  def custom_entity_properties_hash
-    { author: author.entity }
   end
 end

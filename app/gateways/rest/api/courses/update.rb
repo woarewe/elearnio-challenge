@@ -8,22 +8,18 @@ module REST
           json do
             required(:name).filled(Types::Name)
             required(:content).filled(Types::String)
+            required(:author_id).filled(Types::ID::Public)
           end
         end
 
         desc "Update a course content"
         put do
-          course = find_requested_course!
-          validate!(params, with: Contract) => { name:, content: }
-          course
-            .update_content!(content)
-            .update_name!(name)
-            .then { |entity| ::Course.save!(entity) }
-            .then { |entity| present entity, with: Serialization::Course }
-        rescue ::Course::NameDuplicationError
-          validation_error!(:name, I18n.t("rest.errors.already_taken"))
-        rescue ::Types::Course::AlreadyPublishedError
-          validation_error!(:name, I18n.t!("rest.learning_materials.errors.already_published", material: "course"))
+          handle_execution_errors do
+            course = find_requested_resource!
+            validate!(params, with: Contract)
+              .then { |validated| ::Services::Course::Update.new.call(course:, params: validated) }
+              .then { |entity| present entity, with: Serialization::Course }
+          end
         end
       end
     end

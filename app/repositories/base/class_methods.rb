@@ -23,6 +23,10 @@ module Repositories
         find_by(serialize_entity_identifiers(entity))
       end
 
+      def connected_record!(entity)
+        find_by!(serialize_entity_identifiers(entity))
+      end
+
       def entity_properties_class
         entity_class::Properties
       end
@@ -59,16 +63,9 @@ module Repositories
       end
 
       def save_entity_record!(entity)
-        record = connected_record(entity)
-        if record.nil?
-          create!(
-            **serialize_properties(entity.properties),
-            **serialize_entity_identifiers(entity)
-          )
-        else
-          record.update!(serialize_properties(entity.properties))
-          record
-        end
+        record = connected_record!(entity)
+        record.update!(serialize_properties(entity.properties))
+        record
       end
 
       def save_related_records!(_entity); end
@@ -78,7 +75,18 @@ module Repositories
       end
 
       def serialize_properties(properties)
-        properties.as_json
+        {
+          **serialize_name_alike_property_attributes(properties),
+          **serialize_property_attributes_with_different_names(properties)
+        }
+      end
+
+      def serialize_name_alike_property_attributes(properties)
+        properties.as_json.slice(*column_names)
+      end
+
+      def serialize_property_attributes_with_different_names(_properties)
+        {}
       end
     end
   end

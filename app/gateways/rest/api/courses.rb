@@ -5,12 +5,7 @@ module REST
     class Courses < Grape::API
       format "json"
 
-      helpers do
-        def find_requested_course!
-          params => { id: public_id }
-          ::Course.find_by_public_id(public_id).tap { |course| not_found!(:id) if course.nil? }
-        end
-      end
+      helpers(Helpers::Courses, Helpers::LearningMaterials)
 
       mount Create
       mount Index

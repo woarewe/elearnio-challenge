@@ -7,9 +7,11 @@ module REST
         desc "Delete a course"
         delete do
           status 204
-          course = find_requested_course!
-          invalid!(:id, I18n.t!("rest.courses.errors.deleting_published")) if course.published?
-          ::Course.delete(course.private_id)
+          course = find_requested_resource!
+          if course.published?
+            invalid!(:id, I18n.t!("rest.learning_materials.errors.deleting_published", material: "course"))
+          end
+          ::Repositories::Course.delete!(course)
         end
       end
     end

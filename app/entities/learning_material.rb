@@ -8,10 +8,6 @@ module Types
     AlreadyPublishedError = Class.new(Error)
     SameAuthorError = Class.new(Error)
 
-    included do
-      private :update_properties
-    end
-
     def published?
       properties.status == LearningMaterial::Status::PUBLISHED
     end
@@ -24,26 +20,22 @@ module Types
       properties.author == talent
     end
 
-    def co_author?(talent)
-      co_authors.include?(talent)
-    end
-
     def publish!
-      published_guard! { update_status(LearningMaterial::Status::PUBLISHED) }
+      published_guard! { update_properties(status: LearningMaterial::Status::PUBLISHED) }
     end
 
-    def change_author!(author)
-      raise SameAuthorError if author == properties.author
+    def change_author!(talent)
+      raise SameAuthorError if author?(talent)
 
-      update_author(author)
+      update_properties(author:)
+    end
+
+    def update_author(author)
+      update_properties(author:)
     end
 
     def update_name!(name)
-      published_guard! { update_name(name) }
-    end
-
-    def co_authors
-      raise NotImplementedError
+      published_guard! { update_properties(name:) }
     end
 
     private
@@ -52,21 +44,6 @@ module Types
       raise AlreadyPublishedError if published?
 
       yield
-    end
-
-    def update_name(name)
-      updated_properties = self.class::Properties.new(properties.to_h.merge(name:))
-      update_properties(updated_properties)
-    end
-
-    def update_author(author)
-      updated_properties = self.class::Properties.new(properties.to_h.merge(author:))
-      update_properties(updated_properties)
-    end
-
-    def update_status(status)
-      updated_properties = self.class::Properties.new(properties.to_h.merge(status:))
-      update_properties(updated_properties)
     end
   end
 end

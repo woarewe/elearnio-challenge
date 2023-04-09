@@ -14,16 +14,11 @@ module REST
 
         desc "Create a course"
         post do
-          validate!(params, with: Contract) => { content:, author_id:, name: }
-          status = ::Types::LearningMaterial::Status::DRAFT
-          ::Talent
-            .find_by_public_id(author_id)
-            .tap { |author| not_found!(:author_id) if author.nil? }
-            .then { |author| ::Types::Course::Properties.new(content:, name:, author:, status:) }
-            .then { |properties| ::Course.save!(properties) }
-            .then { |entity| present entity, with: Serialization::Course }
-        rescue ::Course::NameDuplicationError
-          validation_error!(:name, I18n.t("rest.errors.already_taken"))
+          handle_execution_errors do
+            validate!(params, with: Contract)
+              .then { |validated| ::Services::Course::Create.new.call(validated) }
+              .then { |entity| present entity, with: Serialization::Course }
+          end
         end
       end
     end

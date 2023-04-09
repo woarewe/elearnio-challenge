@@ -2,7 +2,7 @@
 
 module Services
   module Talent
-    class Update
+    class Update < Base
       def call(talent:, params:)
         update_attributes(talent, params)
           .then { |entity| ::Repositories::Talent.save!(entity) }
