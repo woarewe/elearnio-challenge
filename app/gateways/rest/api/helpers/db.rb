@@ -5,7 +5,7 @@ module REST
     module Helpers
       module DB
         def transaction(&)
-          ActiveRecord::Base.transaction(&)
+          ActiveRecord::Base.transaction(requires_new: true, &)
         end
       end
     end

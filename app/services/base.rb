@@ -19,7 +19,7 @@ module Services
     end
 
     def transaction(&)
-      ActiveRecord::Base.transaction(&)
+      ActiveRecord::Base.transaction(requires_new: true, &)
     end
   end
 end
