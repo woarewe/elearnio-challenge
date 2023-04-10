@@ -85,3 +85,9 @@ You can get all the available endpoints by generation swagger docs
 1. Run the server localy
 2. Visit `/api/swagger`
 3. Grab the response JSON and paste it into `editor.swagger.io`
+
+## Things I would do differently
+
+ - Relationship between courses/learning paths and talents could have done through a table
+`learning_material_id, talent_id, role` with a unique constraint on `learning_material_id, talent_id` so that a talent
+can be either an author of or be assigned with a material. Such the approach would decrease the amount of checks on the application level.
