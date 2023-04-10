@@ -15,6 +15,14 @@ module Types
       end
     end
 
+    def eql?(other)
+      public_id.eql?(other.public_id)
+    end
+
+    def ==(other)
+      eql?(other)
+    end
+
     private
 
     def replace_properties(properties)
